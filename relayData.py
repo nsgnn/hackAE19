@@ -7,19 +7,17 @@ import serial
 url = 'http://url.com'
 waitTime = 5                                     # In seconds
 
-
-
 def sendData(value):
     query = {'data': value}
     res = requests.post(url, data=query)
     return res.text
 
-def serRead(serialinput1):
-        ser_bytes = serialinput1.readline()
+def serRead(serialInput):
+        ser_bytes = serialInput.readline()
         decoded_bytes = float(ser_bytes[0:len(ser_bytes) - 2].decode("utf-8"))
-
+        print(decoded_bytes)
         # Send data along to server
-        sendData(decoded_bytes)
+        # sendData(decoded_bytes)
 
 def main():
     si0 = serial.Serial('/dev/ttyACM0')
@@ -40,3 +38,6 @@ def main():
         except KeyboardInterrupt:
             print("Keyboard Interrupt")
             break
+
+if __name__ == '__main__':
+    main()
