@@ -22,12 +22,12 @@ def serRead(serialinput1):
         sendData(decoded_bytes)
 
 def main():
-    serialinput0 = serial.Serial('/dev/ttyACM0')
-    serialinput1 = serial.Serial('/dev/ttyACM1')
-    serialinput2 = serial.Serial('/dev/ttyACM2')
-    serialinput3 = serial.Serial('/dev/ttyACM3')
+    si0 = serial.Serial('/dev/ttyACM0')
+    si1 = serial.Serial('/dev/ttyACM1')
+    si2 = serial.Serial('/dev/ttyACM2')
+    si3 = serial.Serial('/dev/ttyACM3')
 
-    serialinputs = [serialinput0, serialinput1, serialinput2, serialinput3]
+    serialinputs = [si0, si1, si2, si3]
 
     while True:
         # Wait some given time
@@ -40,5 +40,3 @@ def main():
         except KeyboardInterrupt:
             print("Keyboard Interrupt")
             break
-
-   
