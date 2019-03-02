@@ -1,4 +1,5 @@
 import requests
+import time
 
 
 url = 'http://dankData.org'
@@ -14,7 +15,8 @@ def sendData(value):
 def main():
     ints = [123, 234, 345, 456]
     for i in ints:
-        sendData(i)
+        print(sendData(i))
+        time.sleep(5)
 
 
 if __name__ == '__main__':
