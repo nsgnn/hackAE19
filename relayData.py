@@ -4,7 +4,7 @@ import serial
 
 
 
-url = 'http://url.com'
+url = 'http://dankData.org'
 waitTime = 5                                     # In seconds
 
 def sendData(value):
