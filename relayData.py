@@ -15,25 +15,24 @@ def sendData(value):
     return res.text
 
 
+def serRead(serialinput1):
+        ser_bytes = serialinput1.readline()
+        decoded_bytes = float(ser_bytes[0:len(ser_bytes) - 2].decode("utf-8"))
+
+        # Send data along to server
+        sendData(decoded_bytes)
 
 
 def main():
-
-    serialInput = serial.Serial('/dev/ttyACM0')  # This should be modified to accept data from serial input
-
-    serialInput.flush()
-
+    serialinput1 = serial.Serial('/dev/ttyACM0')  # This should be modified to accept data from serial input
+    serialinput1.flush()
     while True:
         # Wait some given time
         time.sleep(waitTime)
 
         # Collect data from sensors
         try:
-            ser_bytes = serialInput.readline()
-            decoded_bytes = float(ser_bytes[0:len(ser_bytes) - 2].decode("utf-8"))
-            # Send data along to server
-            sendData(decoded_bytes)
-
-        except:
+            serRead(serialinput1)
+        except KeyboardInterrupt:
             print("Keyboard Interrupt")
             break
