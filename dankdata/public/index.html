@@ -49,9 +49,9 @@
  
 
       console.log(dataset);
-      d3.tsv("data.tsv", function(data) {
+      d3.tsv("https://dank.barber.catapult.bates.edu/get-data.php?type=light&start=0&end=956234567643", function(data) {
           dataset = data.map(function(d) {
-            return {"X": d.x, "Y": d.y};
+            return {"X": d['time'], "Y": d['value']};
           });
           console.log(dataset);
           var svg = dimple.newSvg("body", 800, 600);
