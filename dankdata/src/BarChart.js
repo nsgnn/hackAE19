@@ -5,33 +5,29 @@ import * as d3 from "d3";
 import dataTsv from './data.tsv';
 
 
+
 class BarChart extends Component {
-    componentDidMount() {
-        this.drawChart();
-    }
+    render() {
+        return (
+            <div className="BarChart">
+                    <script>
+                    var barPadding = 5;
+                    var barWidth = (svgWidth / dataset.length);
 
-    drawChart() {
-        const data = [12, 5, 6, 6, 9, 10];
-
-        const svg = d3.select("root")
-            .append("svg")
-            .attr("width", 200)
-            .attr("height", 150)
-            .style("margin-left", 100);
-
-        svg.selectAll("rect")
-            .data(data)
-            .enter()
-            .append("rect")
-            .attr("x", (d, i) => i * 70)
-            .attr("y", (d, i) => 150 - 10 * d)
-            .attr("width", 65)
-            .attr("height", (d, i) => d * 10)
-            .attr("fill", "green");
-    }
-
-    render(){
-        return <div id={"#chart"}></div>
+                    var barChart = svg.selectAll("rect")
+                    .data(dataTsv)
+                    .enter()
+                    .append("rect")
+                    .attr("y", (svgHeight - d)
+                    })
+                    .attr("height", d
+                    })
+                    .attr("width", barWidth - barPadding)
+                    .attr("transform", "translate("+ [barWidth * i, 0] +")";
+                    });
+                    </script>
+            </div>
+        );
     }
 }
 
