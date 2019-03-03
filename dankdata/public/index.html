@@ -49,7 +49,7 @@
  
 
       console.log(dataset);
-      d3.tsv("https://dank.barber.catapult.bates.edu/get-data.php?type=light&start=0&end=956234567643", function(data) {
+      d3.tsv("https://dank.barber.catapult.bates.edu/get-data.php?type=temp&start=0&end=956234567643", function(data) {
           dataset = data.map(function(d) {
             return {"X": d['time'], "Y": d['value']};
           });
@@ -69,6 +69,21 @@
       //console.log(dataset);
 
   	</script>
+
+    <div style="background-color: #070 ; padding: 100px; border: 10px red;">
+      <form onSubmit={this.handleSubmit.bind(this)}>
+        Start Date: <input type="date" name="fname">
+        End Date: <input type="date" name="lname"><br><br><br>
+        <select text-align: center>
+         <option value="PH">PH Levels</option>
+         <option value="Air Temp">Air Temp</option>
+         <option value="Humidity">Humidity</option>
+         <option value="Ground Moisture">Ground Moisture</option>
+         <option value="Light">Light</option>
+        </select><br>
+        <input type="Submit"/>
+      </form>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
