@@ -31,6 +31,15 @@
     <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <div id="main"
+         style="
+                margin: auto;
+                display: block;
+                width: 75%;
+                padding: auto;
+    ">
+
+    </div>
     <script type="text/javascript">
 
       function getParameterByName(name, url) {
@@ -48,6 +57,19 @@
       var currDataType = getParameterByName('currDataType');
 
 
+      if(sDate === null){
+        sDate = "2018-12-31";
+      }
+
+      if(eDate === null){
+        eDate = "2019-04-01";
+      }
+
+      if(currDataType === null){
+        currDataType = "ph";
+      }
+
+
       function epochFromDate(date) {
         return Math.floor(new Date(date)/1000.0);
       }
@@ -59,15 +81,19 @@
           dataset = data.map(function(d) {
             return {"X": d['time'], "Y": d['value']};
           });
-          var svg = dimple.newSvg("body", 800, 600);
+          var svg = dimple.newSvg("#main", 1500, 600);
           
 
           var chart = new dimple.chart(svg, dataset);
-          chart.addCategoryAxis("x", "X");
-          chart.addMeasureAxis("y", "Y");
+          var x = chart.addCategoryAxis("x", "X");
+          var y = chart.addMeasureAxis("y", "Y");
+          x.title = "Time";
+          //x.tickFormat("%d %m %Y")
+          y.title = currDataType;
           chart.addSeries(null, dimple.plot.bar);
-          chart.draw();
-      });      
+        chart.setMargins(100, 100, 100, 100);
+        chart.draw();
+      });
 
 
       
@@ -75,20 +101,17 @@
 
   	</script>
 
-    <div style=" padding: 100px;">
-      <form onSubmit={this.handleSubmit.bind(this)}>
+    <div style=" padding: 100px; float: left;">
+      <form id="filterForm" onSubmit={this.handleSubmit.bind(this)}>
         Start Date: <input type="date" name="sDate" id="sDate" value="2018-12-31">
         End Date: <input type="date" name="eDate" id="eDate" value="2019-04-01">
         <select name="currDataType" id="currDataType" style="text-align: center">
-         <option value="ph">PH Levels</option>
          <option value="Temp">Air Temp</option>
          <option value="Humidity">Humidity</option>
-         <option value="soilmst">Ground Moisture</option>
+          <option value="ph">PH Levels</option>
+          <option value="soilmst">Ground Moisture</option>
          <option value="Light">Light</option>
         </select>
-        <br>
-        <br>
-        <br>
         <input type="Submit"/>
       </form>
     </div>
