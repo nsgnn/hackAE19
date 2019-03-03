@@ -2,7 +2,6 @@
 
 <html lang="en">
   <head>
-    <src ="data.tsv">
   	<script src="http://d3js.org/d3.v4.min.js"></script>
   	<script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
     <meta charset="utf-8" />
@@ -63,7 +62,7 @@
 
       if(eDate === null){
         eDate = "2019-04-01";
-      }
+       }
 
       if(currDataType === null){
         currDataType = "ph";
@@ -74,7 +73,7 @@
         return Math.floor(new Date(date)/1000.0);
       }
 
-      d3.tsv("https://dank.barber.catapult.bates.edu/get-data.php?type="+
+      d3.tsv("https://dank.barber.catapult.bates.edu/get-data.php?plant_id=0&type="+
               currDataType
               +"&start="+epochFromDate(sDate)
               +"&end="+epochFromDate(eDate), function(data) {
@@ -101,7 +100,7 @@
 
   	</script>
 
-    <div style=" padding-top: 100px; padding-left:30%; float: left; ">
+    <div style=" padding-top: 100px; float: left; ">
       <form id="filterForm" onSubmit={this.handleSubmit.bind(this)}>
         Start Date: <input type="date" name="sDate" id="sDate" value="2018-12-31">
         End Date: <input type="date" name="eDate" id="eDate" value="2019-04-01">
