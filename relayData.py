@@ -4,12 +4,20 @@ import serial
 
 
 
-url = 'http://dankData.org'
+url = 'https://dank.barber.catapult.bates.edu/update.php'
 waitTime = 5                                     # In seconds
 
-def sendData(value):
-    query = {'data': value}
-    res = requests.post(url, data=query)
+def sendData(plant, sensor_type, value):
+    epoch_time = int(time.time())
+    query = {'time': epoch_time, 'plant_id': plant, 'type': sensor_type, 'value': value}
+    print(query)
+    try:
+        res = requests.post(url, data=query)
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        print e
+        sys.exit(1)
+
+
     return res.text
 
 def serRead(serialInput):
@@ -20,24 +28,27 @@ def serRead(serialInput):
         # sendData(decoded_bytes)
 
 def main():
-    si0 = serial.Serial('/dev/ttyACM0')
-    si1 = serial.Serial('/dev/ttyACM1')
-    si2 = serial.Serial('/dev/ttyACM2')
-    si3 = serial.Serial('/dev/ttyACM3')
 
-    serialinputs = [si0, si1, si2, si3]
+    print(sendData(3, 'light', 6.7))
+    # si0 = serial.Serial('/dev/ttyACM0')
+    # si1 = serial.Serial('/dev/ttyACM1')
+    # si2 = serial.Serial('/dev/ttyACM2')
+    # si3 = serial.Serial('/dev/ttyACM3')
 
-    while True:
-        # Wait some given time
-        time.sleep(waitTime)
+    # serialinputs = [si0, si1, si2, si3]
 
-        # Collect data from sensors
-        try:
-            for serinput in serialinputs:
-                serRead(serinput)
-        except KeyboardInterrupt:
-            print("Keyboard Interrupt")
-            break
+    # while True:
+    #     # Wait some given time
+    #     time.sleep(waitTime)
+
+    #     # Collect data from sensors
+    #     try:
+    #         for serinput in serialinputs:
+    #             serRead(serinput)
+    #     except KeyboardInterrupt:
+    #         print("Keyboard Interrupt")
+    #         break
+
 
 if __name__ == '__main__':
     main()
