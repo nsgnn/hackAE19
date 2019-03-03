@@ -54,6 +54,8 @@
       var sDate = getParameterByName('sDate');
       var eDate = getParameterByName('eDate');
       var currDataType = getParameterByName('currDataType');
+      var showAll = getParameterByName('showAll');
+      var allPlants = "";
 
 
       if(sDate === null){
@@ -68,19 +70,25 @@
         currDataType = "ph";
       }
 
+      if(showAll !== "on"){
+         allPlants = "&plant_id=0";
+      }
+      console.log(allPlants);
 
       function epochFromDate(date) {
         return Math.floor(new Date(date)/1000.0);
       }
 
-      d3.tsv("https://dank.barber.catapult.bates.edu/get-data.php?plant_id=0&type="+
+      d3.tsv("https://dank.barber.catapult.bates.edu/get-data.php?type="+
               currDataType
               +"&start="+epochFromDate(sDate)
-              +"&end="+epochFromDate(eDate), function(data) {
+              +"&end="+epochFromDate(eDate)
+              +allPlants, function(data) {
           dataset = data.map(function(d) {
-            return {"X": d['time'], "Y": d['value']};
+            return {"X": d['time'], "Y": d['value'], "Z": d['plant_id']};
           });
           var svg = dimple.newSvg("#main", 1500, 600);
+
           
 
           var chart = new dimple.chart(svg, dataset);
@@ -89,7 +97,7 @@
           x.title = "Time";
           //x.tickFormat("%d %m %Y")
           y.title = currDataType;
-          chart.addSeries(null, dimple.plot.bar);
+          chart.addSeries("Z", dimple.plot.line);
         chart.setMargins(100, 100, 100, 100);
         chart.draw();
       });
@@ -104,6 +112,7 @@
       <form id="filterForm" onSubmit={this.handleSubmit.bind(this)}>
         Start Date: <input type="date" name="sDate" id="sDate" value="2018-12-31">
         End Date: <input type="date" name="eDate" id="eDate" value="2019-04-01">
+        Show All Plants:<input type="checkbox" id="showAll" name="showAll">
         <select name="currDataType" id="currDataType" style="text-align: center">
          <option value="Temp">Air Temp</option>
          <option value="Humidity">Humidity</option>
