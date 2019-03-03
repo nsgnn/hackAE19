@@ -32,28 +32,33 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script type="text/javascript">
-      var dataset = [{"X":30, "Y":10}];
 
-
-
-      //dataset.push({ "X":"World", "Y":3000 })
-      //{ "X":"Hello", "Y":2000 }
-      //var dataset = [{"X":0, "Y": 0}];
-
-      /*
-      function listify(data){
-        return { "X":data.x, "Y": data.y };
+      function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
       }
-      */
 
- 
+      var sDate = getParameterByName('sDate');
+      var eDate = getParameterByName('eDate');
+      var currDataType = getParameterByName('currDataType');
 
-      console.log(dataset);
-      d3.tsv("https://dank.barber.catapult.bates.edu/get-data.php?type=temp&start=0&end=956234567643", function(data) {
+
+      function epochFromDate(date) {
+        return Math.floor(new Date(date)/1000.0);
+      }
+
+      d3.tsv("https://dank.barber.catapult.bates.edu/get-data.php?type="+
+              currDataType
+              +"&start="+epochFromDate(sDate)
+              +"&end="+epochFromDate(eDate), function(data) {
           dataset = data.map(function(d) {
             return {"X": d['time'], "Y": d['value']};
           });
-          console.log(dataset);
           var svg = dimple.newSvg("body", 800, 600);
           
 
@@ -70,17 +75,20 @@
 
   	</script>
 
-    <div style="background-color: #070 ; padding: 100px; border: 10px red;">
+    <div style=" padding: 100px;">
       <form onSubmit={this.handleSubmit.bind(this)}>
-        Start Date: <input type="date" name="fname">
-        End Date: <input type="date" name="lname"><br><br><br>
-        <select text-align: center>
-         <option value="PH">PH Levels</option>
-         <option value="Air Temp">Air Temp</option>
+        Start Date: <input type="date" name="sDate" id="sDate" value="2018-12-31">
+        End Date: <input type="date" name="eDate" id="eDate" value="2019-04-01">
+        <select name="currDataType" id="currDataType" style="text-align: center">
+         <option value="ph">PH Levels</option>
+         <option value="Temp">Air Temp</option>
          <option value="Humidity">Humidity</option>
-         <option value="Ground Moisture">Ground Moisture</option>
+         <option value="soilmst">Ground Moisture</option>
          <option value="Light">Light</option>
-        </select><br>
+        </select>
+        <br>
+        <br>
+        <br>
         <input type="Submit"/>
       </form>
     </div>

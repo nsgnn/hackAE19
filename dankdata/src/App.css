@@ -31,15 +31,3 @@
     transform: rotate(360deg);
   }
 }
-
-.BarChart {
-  border: 3px solid dimgrey;
-  text-align: center;
-  background: #abbad7;
-  color: #333;
-  margin: 20px;
-  padding: 200px;
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
-}
