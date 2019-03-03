@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
+    <src ="data.tsv">
   	<script src="http://d3js.org/d3.v4.min.js"></script>
   	<script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
     <meta charset="utf-8" />
@@ -25,21 +27,47 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Dank Data</title>
-  </head>
-  <body>
+    </head>
+    <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-      <script type="text/javascript">
-    var svg = dimple.newSvg("body", 800, 600);
-    var data = [
-      { "Word":"Hello", "Awesomeness":2000 },
-      { "Word":"World", "Awesomeness":3000 }
-    ];
-    var chart = new dimple.chart(svg, data);
-    chart.addCategoryAxis("x", "Word");
-    chart.addMeasureAxis("y", "Awesomeness");
-    chart.addSeries(null, dimple.plot.bar);
-    chart.draw();
+    <script type="text/javascript">
+      var dataset = [{"X":30, "Y":10}];
+
+
+
+      //dataset.push({ "X":"World", "Y":3000 })
+      //{ "X":"Hello", "Y":2000 }
+      //var dataset = [{"X":0, "Y": 0}];
+
+      /*
+      function listify(data){
+        return { "X":data.x, "Y": data.y };
+      }
+      */
+
+ 
+
+      console.log(dataset);
+      d3.tsv("data.tsv", function(data) {
+          dataset = data.map(function(d) {
+            return {"X": d.x, "Y": d.y};
+          });
+          console.log(dataset);
+          var svg = dimple.newSvg("body", 800, 600);
+          
+
+          var chart = new dimple.chart(svg, dataset);
+          chart.addCategoryAxis("x", "X");
+          chart.addMeasureAxis("y", "Y");
+          chart.addSeries(null, dimple.plot.bar);
+          chart.draw();
+      });      
+
+
+      
+      //console.log(dataset);
+
   	</script>
     <!--
       This HTML file is a template.
