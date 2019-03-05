@@ -1,2 +1,5 @@
 # hackAE19
-https://gist.github.com/AlexandreFeren/c64f7eb489d4ec6a4bfab08a8abb9e20 (dankFilter)
+Hackathon AE 2019 Project
+Team : SUDO apt-get name
+Awarded best Domain.com registry
+
